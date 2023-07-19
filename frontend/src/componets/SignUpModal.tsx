@@ -2,16 +2,19 @@ import { useForm } from "react-hook-form";
 import { User } from "../models/user";
 import { SignUpCredentials } from "../network/notes_api";
 import * as NotesApi from "../network/notes_api";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal, Alert } from "react-bootstrap";
 import TextInputField from "./Form/TextInputField";
 import stylesUtils from "../styles/utils.module.css";
-
+import { useState } from "react";
+import { ConflictError, UnAuthorizedError } from "../errors/httpErrors";
+import { toast } from "react-toastify";
 interface SignUpModalProps {
   onDismiss: () => void;
   onSignUpSuccessful: (user: User) => void;
 }
 
 const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
+  const [errorText, setErrorText] = useState<string | null>();
   const {
     register,
     handleSubmit,
@@ -23,8 +26,11 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
       const newUser = await NotesApi.signUp(credentials);
       onSignUpSuccessful(newUser);
     } catch (err) {
-      alert(err);
-      console.log(err);
+      if (err instanceof UnAuthorizedError) {
+        toast.error(err.message);
+      } else if (err instanceof ConflictError) {
+        setErrorText(err.message);
+      }
     }
   }
 
@@ -34,6 +40,7 @@ const SignUpModal = ({ onDismiss, onSignUpSuccessful }: SignUpModalProps) => {
         <Modal.Title>Sign Up</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        {errorText && <Alert variant="danger">{errorText}</Alert>}
         <Form onSubmit={handleSubmit(onSubmit)}>
           <TextInputField
             name="username"
