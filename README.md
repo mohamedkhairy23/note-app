@@ -1,6 +1,7 @@
 Features
-- MERN Technologies 
-- Typescript in frontend and backend
+- MERN Technologies
+- React and Typescript for frontend
+- NodeJS, ExpressJS, TypeScript, and Mongo database for backend
 - Auth using express session and cookies
 - CRUD methods on notes
 - React Bootstrap for UI
