@@ -4,3 +4,4 @@ Features
 - Auth using express session and cookies
 - CRUD methods on notes
 - React Bootstrap for UI
+- React hook form for form validation
