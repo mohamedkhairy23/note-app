@@ -1,5 +1,6 @@
 import { Note } from "../models/note";
 import { User } from "../models/user";
+import { UnAuthorizedError, ConflictError } from "../errors/httpErrors";
 
 async function fetchData(input: RequestInfo, init?: RequestInit) {
   const response = await fetch(input, init);
@@ -7,8 +8,14 @@ async function fetchData(input: RequestInfo, init?: RequestInit) {
     return response;
   } else {
     const errorBody = await response.json();
-    const errorMessage = errorBody.console.error;
-    throw Error(errorMessage);
+    const errorMessage = errorBody.error;
+    if (response.status === 401) {
+      throw new UnAuthorizedError(errorMessage);
+    } else if (response.status === 409) {
+      throw new ConflictError(errorMessage);
+    } else {
+      throw Error(errorMessage);
+    }
   }
 }
 

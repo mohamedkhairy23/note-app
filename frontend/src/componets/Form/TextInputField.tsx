@@ -1,5 +1,5 @@
-import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 import { Form } from "react-bootstrap";
+import { FieldError, RegisterOptions, UseFormRegister } from "react-hook-form";
 
 interface TextInputField {
   name: string;
@@ -10,6 +10,7 @@ interface TextInputField {
   [props: string]: any;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 const TextInputField = ({
   name,
   label,

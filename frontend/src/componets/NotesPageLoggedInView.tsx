@@ -10,8 +10,8 @@ import { Note as NoteModel } from "../models/note";
 import * as NotesApi from "../network/notes_api";
 import styles from "../styles/NotesPage.module.css";
 import styleUtils from "../styles/utils.module.css";
+import { toast } from "react-toastify";
 
-interface NotesPageLoggedInView {}
 const NotesPageLoggedInView = () => {
   const [notes, setNotes] = useState<NoteModel[]>([]);
   const [showAddNoteDialog, setShowAddNoteDialog] = useState(false);
@@ -40,6 +40,7 @@ const NotesPageLoggedInView = () => {
     try {
       await NotesApi.deleteNote(note._id);
       setNotes(notes.filter((existingNote) => existingNote._id !== note._id));
+      toast.success("Note Deleted Successfully");
     } catch (err) {
       console.error(err);
       alert(err);

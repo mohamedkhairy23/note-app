@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { NoteInput } from "../network/notes_api";
 import * as NotesApi from "../network/notes_api";
 import TextInputField from "./Form/TextInputField";
-
+import { toast } from "react-toastify";
 interface AddEditNoteDialogProps {
   onDismiss: () => void;
   onNoteSaved: (note: Note) => void;
@@ -32,8 +32,10 @@ const AddEditNoteDialog = ({
       let noteResponse: Note;
       if (noteToEdit) {
         noteResponse = await NotesApi.updateNote(noteToEdit._id, input);
+        toast.success("Note Updated Successfully");
       } else {
         noteResponse = await NotesApi.createNote(input);
+        toast.success("Note Created Successfully");
       }
       onNoteSaved(noteResponse);
     } catch (err) {
