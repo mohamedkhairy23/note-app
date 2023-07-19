@@ -3,7 +3,7 @@ Features
 - React and Typescript for frontend
 - NodeJS, ExpressJS, TypeScript, and Mongo database for backend
 - Auth using express session and cookies
-- CRUD methods on notes
+- CRUD methods
 - React Bootstrap for UI
 - React hook form for form validation
 ![note1](https://github.com/mohamedkhairy23/note-app/assets/82667987/43d8a362-ea2a-480e-bc40-b1dfc6aa5092)
